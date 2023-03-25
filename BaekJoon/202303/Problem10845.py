@@ -5,11 +5,14 @@ class Node:
     next = None
     def __init__(self, value_):
         self.value = value_
+        self.next = None
 
 class Queue:
     front = None
     back = None
     size = 0
+    def __init__(self):
+        self.size = 0
     def push(self, value):
         if self.empty() == 1:
             tmp = Node(value)
@@ -19,25 +22,36 @@ class Queue:
             tmp = Node(value)
             self.back.next = tmp
             self.back = tmp
-        size += 1
+        self.size += 1
     def pop(self):
         if self.empty() == 1:
             return -1
         else:
             tmp = self.front
-            self.front = tmp.next
-        size -= 1
-    def size(self):
+            if tmp.next == None:
+                self.front = None
+                self.back = None
+            else:
+                self.front = tmp.next
+            self.size -= 1
+            return tmp.value
+    def getsize(self):
         return self.size
     def empty(self):
         if self.size == 0:
             return 1
         else:
             return 0
-    def front(self):
-        return self.front.value
-    def back(self):
-        return self.back.value
+    def getfront(self):
+        if self.front == None:
+            return -1
+        else:
+            return self.front.value
+    def getback(self):
+        if self.back == None:
+            return -1
+        else:
+            return self.back.value
 
 inputCnt = int(sys.stdin.readline())
 que = Queue()
@@ -49,10 +63,10 @@ for _ in range(inputCnt):
     elif command[0] == 'pop':
         print(que.pop())
     elif command[0] == 'size':
-        print(que.size())
+        print(que.getsize())
     elif command[0] == 'empty':
         print(que.empty())
     elif command[0] == 'front':
-        print(que.front())
+        print(que.getfront())
     elif command[0] == 'back':
-        print(que.back())
+        print(que.getback())
